@@ -13,6 +13,8 @@ import com.daovu65.studentmanager.R
 import com.daovu65.studentmanager.Util
 import com.daovu65.studentmanager.domain.entity.Student
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.activity_profile.*
+import java.io.File
 
 class MainAdapter(
     private val context: Context,
@@ -58,10 +60,10 @@ class MainAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bind(student: Student) {
-//            Glide.with(context)
-//                .load(Uri.parse(student.imageProfile))
-//                .override(60, 60)
-//                .into(imageProfile)
+            Glide.with(context)
+                .load(Uri.parse(student.imageProfile))
+                .override(60, 60)
+                .into(imageProfile)
             name.text = "${student.lastName} ${student.firstName}"
             birth.text = Util.dateFormat(student.birth)
         }

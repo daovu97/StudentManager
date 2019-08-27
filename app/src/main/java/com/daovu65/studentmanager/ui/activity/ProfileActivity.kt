@@ -69,10 +69,9 @@ class ProfileActivity : AppCompatActivity() {
             tv_birth.text = Util.dateFormat(it.birth)
             tv_sex.text = EditProfileActivity.listSex[it.sex]
             tv_major.text = it.major
-//            val uri: Uri = Uri.parse(it.imageProfile)
-//            Glide.with(this)
-//                .load(File(uri.path!!))
-//                .into(image_profile)
+            Glide.with(this)
+                .load(Uri.parse(it.imageProfile))
+                .into(image_profile)
         }
 
     }
@@ -85,8 +84,9 @@ class ProfileActivity : AppCompatActivity() {
         val sex = student?.sex.toString()
         val address = student?.address
         val major = student?.major
+        val imageProfile = student?.imageProfile
         return arrayListOf(
-            id, firstName, lastName, birth, sex, address, major
+            id, firstName, lastName, birth, sex, address, major, imageProfile
         )
     }
 

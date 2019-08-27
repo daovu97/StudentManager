@@ -73,7 +73,10 @@ class MainActivity : AppCompatActivity() {
             layoutManager =
                 LinearLayoutManager(this@MainActivity)
             viewModel.listStudent.observe(this@MainActivity,
-                Observer<List<Student>> { t -> mAdapter.submitValue(t) })
+                Observer<List<Student>> { t ->
+                    mAdapter.submitValue(t)
+                    print(t.toString())
+                })
             adapter = mAdapter
 
         }

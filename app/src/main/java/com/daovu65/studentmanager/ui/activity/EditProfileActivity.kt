@@ -16,6 +16,8 @@ import com.daovu65.studentmanager.domain.entity.Student
 import com.daovu65.studentmanager.ui.viewmodel.EditProfileVMFactory
 import com.daovu65.studentmanager.ui.viewmodel.EditProfileViewModel
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import kotlinx.android.synthetic.main.activity_edit_profile.image_profile
+import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
 
 
@@ -31,7 +33,7 @@ class EditProfileActivity : AppCompatActivity() {
     lateinit var viewModelFactory: EditProfileVMFactory
     private var mState: Int = 0
     private val mBirth: Calendar = Calendar.getInstance()
-    private var selectedImageUrl: Uri? = null
+    private lateinit var selectedImageUrl: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         InjectionUtil.inject(this)
@@ -75,14 +77,14 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
 
-//        image_profile.setOnClickListener {
-//            val intent = Intent(Intent.ACTION_PICK)
-//            intent.type = "image/*"
-//            startActivityForResult(
-//                Intent.createChooser(intent, "Select Picture"),
-//                REQUEST_PICK_IMAGE
-//            )
-//        }
+        image_profile.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(
+                Intent.createChooser(intent, "Select Picture"),
+                REQUEST_PICK_IMAGE
+            )
+        }
 
         btn_cancel.setOnClickListener {
             finish()
@@ -139,7 +141,7 @@ class EditProfileActivity : AppCompatActivity() {
                 sex = Integer.parseInt(it[4]),
                 address = it[5],
                 major = it[6],
-                imageProfile = ""
+                imageProfile = it[7]
             )
         }
 
@@ -152,6 +154,10 @@ class EditProfileActivity : AppCompatActivity() {
             edt_address.setText(it.address)
             edt_major.setText(it.major)
             spiner_sex.setSelection(it.sex)
+            selectedImageUrl = Uri.parse(it.imageProfile)
+            Glide.with(this)
+                .load(selectedImageUrl)
+                .into(image_profile)
         }
 
         btn_delete.apply {
@@ -174,7 +180,7 @@ class EditProfileActivity : AppCompatActivity() {
             val sex = SexValue[spiner_sex.selectedItemPosition]
             val address = edt_address.text.toString()
             val major = edt_major.text.toString()
-            val imageProfile = ""
+            val imageProfile = selectedImageUrl.toString()
             val student = Student(
                 id = currentStudent!!.id,
                 firstName = firstName,
@@ -193,16 +199,16 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == REQUEST_PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-//
-//            selectedImageUrl = data.data
-//            Glide.with(this)
-//                .load(selectedImageUrl)
-//                .into(image_profile)
-//        }
-//    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+
+            selectedImageUrl = data.data!!
+            Glide.with(this)
+                .load(selectedImageUrl)
+                .into(image_profile)
+        }
+    }
 
 
 }

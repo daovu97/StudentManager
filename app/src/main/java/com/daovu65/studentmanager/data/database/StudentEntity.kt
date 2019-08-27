@@ -27,5 +27,8 @@ data class StudentEntity(
     val address: String,
 
     @ColumnInfo(name = "major")
-    val major: String
+    val major: String,
+
+    @ColumnInfo(name = "image_profile")
+    val imageProfile: String
 )

@@ -12,7 +12,8 @@ object Mapper {
             birth = student.birth.toString(),
             sex = student.sex.toString(),
             address = student.address,
-            major = student.major
+            major = student.major,
+            imageProfile = student.imageProfile
         )
 
     fun studentEntityToStudent(studentEntity: StudentEntity): Student =
@@ -24,7 +25,7 @@ object Mapper {
             sex = Integer.parseInt(studentEntity.sex),
             address = studentEntity.address,
             major = studentEntity.major,
-            imageProfile = ""
+            imageProfile = studentEntity.imageProfile
         )
 
 }
