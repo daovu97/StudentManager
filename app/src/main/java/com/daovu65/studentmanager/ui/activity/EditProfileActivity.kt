@@ -16,8 +16,6 @@ import com.daovu65.studentmanager.domain.entity.Student
 import com.daovu65.studentmanager.ui.viewmodel.EditProfileVMFactory
 import com.daovu65.studentmanager.ui.viewmodel.EditProfileViewModel
 import kotlinx.android.synthetic.main.activity_edit_profile.*
-import kotlinx.android.synthetic.main.activity_edit_profile.image_profile
-import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
 
 
