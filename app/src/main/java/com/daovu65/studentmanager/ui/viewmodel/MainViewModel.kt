@@ -24,14 +24,6 @@ class MainViewModel(
     val listStudent: LiveData<List<Student>>
         get() = _listStudent
 
-
-    /*
-        sorted by
-        first name : 1,
-        last name : 2
-        birth : 3,
-        default : 0
-     */
     fun sortedStudent(value: String) {
         uiScope.launch {
             val value = sortedBy.invoke(value)
@@ -47,18 +39,9 @@ class MainViewModel(
         }
     }
 
-    fun refreshData() {
-        uiScope.launch {
-            val value = getAllStudent.invoke()
-            _listStudent.postValue(value)
-        }
-    }
-
-
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
     }
-
 
 }

@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">StudentManager</string>
-    <string name="first_name">First name</string>
-    <string name="last_name">Last name</string>
-    <string name="date_of_birth">Date of birth</string>
-    <string name="sex">Sex</string>
-    <string name="address">Address</string>
-    <string name="major">Major</string>
+    <string name="app_name">StudentManager:</string>
+    <string name="first_name">First name:</string>
+    <string name="last_name">Last name:</string>
+    <string name="date_of_birth">Date of birth:</string>
+    <string name="sex">Sex:</string>
+    <string name="address">Address:</string>
+    <string name="major">Major:</string>
 </resources>

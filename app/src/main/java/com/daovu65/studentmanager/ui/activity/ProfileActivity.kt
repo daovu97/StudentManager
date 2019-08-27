@@ -13,10 +13,9 @@ import com.daovu65.studentmanager.Util
 import com.daovu65.studentmanager.domain.entity.Student
 import com.daovu65.studentmanager.ui.viewmodel.ProfileVMFactory
 import com.daovu65.studentmanager.ui.viewmodel.ProfileViewModel
-import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile.image_profile
-import java.io.File
+
 
 class ProfileActivity : AppCompatActivity() {
 

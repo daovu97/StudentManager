@@ -50,7 +50,7 @@ class EditProfileActivity : AppCompatActivity() {
         spiner_sex.apply {
             adapter = ArrayAdapter(
                 this@EditProfileActivity,
-                android.R.layout.simple_dropdown_item_1line,
+                android.R.layout.simple_spinner_dropdown_item,
                 listSex
             )
         }
@@ -97,13 +97,14 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun updateBirth(birth: Calendar) {
-        edt_birth.text = Util.dateFormat(birth.timeInMillis / 1000L)
+        edt_birth.setText(Util.dateFormat(birth.timeInMillis / 1000L))
     }
 
     private fun addNewStudent() {
         btn_delete.visibility = View.GONE
         btn_save.setOnClickListener {
             val firstName = edt_first_name.text.toString()
+            if (firstName.isEmpty() || firstName.isBlank()) return@setOnClickListener
             val lastName = edt_last_name.text.toString()
             val birth = mBirth.timeInMillis / 1000L
             val sex = SexValue[spiner_sex.selectedItemPosition]
@@ -148,7 +149,7 @@ class EditProfileActivity : AppCompatActivity() {
         currentStudent?.let {
             edt_first_name.setText(it.firstName)
             edt_last_name.setText(it.lastName)
-            edt_birth.text = Util.dateFormat(it.birth)
+            edt_birth.setText(Util.dateFormat(it.birth))
             edt_address.setText(it.address)
             edt_major.setText(it.major)
             spiner_sex.setSelection(it.sex)

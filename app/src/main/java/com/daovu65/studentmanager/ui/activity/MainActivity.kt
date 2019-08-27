@@ -7,21 +7,16 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.adapters.TextViewBindingAdapter
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.daovu65.studentmanager.InjectionUtil
 import com.daovu65.studentmanager.R
 import com.daovu65.studentmanager.domain.entity.Student
 import com.daovu65.studentmanager.ui.adapter.MainAdapter
 import com.daovu65.studentmanager.ui.viewmodel.MainVMFactory
 import com.daovu65.studentmanager.ui.viewmodel.MainViewModel
-import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -48,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         spinner_sortby.apply {
             adapter = ArrayAdapter(
                 this@MainActivity,
-                android.R.layout.simple_dropdown_item_1line,
+                android.R.layout.simple_spinner_dropdown_item,
                 listSortedBy
             )
 
