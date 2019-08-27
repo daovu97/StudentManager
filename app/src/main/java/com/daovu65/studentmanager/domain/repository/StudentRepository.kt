@@ -10,11 +10,13 @@ interface StudentRepository {
 
     suspend fun getStudentByIdAsync(id: Int): Deferred<Student>
 
-    suspend fun findStudentByName(name: String): Deferred<List<Student>>
+    suspend fun findStudentByNameAsync(name: String): Deferred<List<Student>>
 
     suspend fun deleteStudent(student: Student): Job
 
     suspend fun addStudent(student: Student): Job
 
     suspend fun updateStudent(student: Student): Job
+
+    suspend fun sortedByAsync(value: String): Deferred<List<Student>>
 }

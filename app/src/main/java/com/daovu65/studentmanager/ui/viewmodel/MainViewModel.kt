@@ -7,11 +7,13 @@ import com.daovu65.studentmanager.domain.entity.Student
 import com.daovu65.studentmanager.domain.interactor.FindStudentByName
 import com.daovu65.studentmanager.domain.interactor.GetAllStudent
 import com.daovu65.studentmanager.domain.interactor.GetStudentById
+import com.daovu65.studentmanager.domain.interactor.SortedBy
 import kotlinx.coroutines.*
 
 class MainViewModel(
     private val getAllStudent: GetAllStudent,
-    private val findStudentByName: FindStudentByName
+    private val findStudentByName: FindStudentByName,
+    private val sortedBy: SortedBy
 ) : ViewModel() {
 
     private val viewModelJob = SupervisorJob()
@@ -30,6 +32,14 @@ class MainViewModel(
         birth : 3,
         default : 0
      */
+    fun sortedStudent(value: String) {
+        uiScope.launch {
+            val value = sortedBy.invoke(value)
+            _listStudent.postValue(value)
+        }
+
+    }
+
     fun findStudentByName(name: String) {
         uiScope.launch {
             val value = findStudentByName.invoke(name)
@@ -37,24 +47,10 @@ class MainViewModel(
         }
     }
 
-    fun refreshData(sortedBy: Int) {
+    fun refreshData() {
         uiScope.launch {
             val value = getAllStudent.invoke()
-            when (sortedBy) {
-                0 -> _listStudent.postValue(value)
-                1
-                -> _listStudent.postValue(value.sortedBy {
-                    it.firstName
-                })
-                2 -> _listStudent.postValue(value.sortedBy {
-                    it.lastName
-                })
-                3 -> _listStudent.postValue(value.sortedBy {
-                    it.birth
-                })
-                else -> _listStudent.postValue(value)
-            }
-
+            _listStudent.postValue(value)
         }
     }
 

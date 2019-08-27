@@ -54,11 +54,16 @@ object InjectionUtil {
         FindStudentByName(repository)
     }
 
+    private val sortedBy: SortedBy by lazy {
+        SortedBy(repository)
+    }
+
     fun inject(mainActivity: MainActivity) {
         this.context = mainActivity.applicationContext
         val viewModelFactory = MainVMFactory(
             getAllStudent = getAllStudent,
-            findStudentByName = findStudentByName
+            findStudentByName = findStudentByName,
+            sortedBy = sortedBy
         )
 
         mainActivity.viewModelFactory = viewModelFactory

@@ -1,6 +1,7 @@
 package com.daovu65.studentmanager.data.database
 
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 
 @Dao
 interface StudentDao {
@@ -21,4 +22,8 @@ interface StudentDao {
 
     @Delete
     fun delete(studentEntity: StudentEntity)
+
+    //    @Query("SELECT * FROM student_table ORDER BY :value ASC")
+    @RawQuery
+    fun sortedBy(sortQuery: SupportSQLiteQuery): List<StudentEntity>
 }

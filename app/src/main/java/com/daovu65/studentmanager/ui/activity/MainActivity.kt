@@ -28,7 +28,9 @@ class MainActivity : AppCompatActivity() {
         const val BUNDLE_ADD_NEW = "BUNDLE_ADD_NEW"
         const val BUNDLE_STUDENT_ID = "BUNDLE_STUDENT_ID"
 
-        val listSortedBy: List<String> = listOf("None", "First name", "Last name", "Age")
+        val listSortedBy: List<String> = listOf("First name", "Last name", "Age")
+        val SortedValue = listOf("first_name", "last_name", "birth")
+
     }
 
     private lateinit var viewModel: MainViewModel
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     sortedBy = p2
-                    viewModel.refreshData(sortedBy)
+                    viewModel.sortedStudent(SortedValue[sortedBy])
                 }
 
             }
@@ -86,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 p0?.let {
                     when {
                         it.isNotEmpty() || it.isNotBlank() -> viewModel.findStudentByName(p0.toString())
-                        else -> viewModel.refreshData(sortedBy)
+                        else -> viewModel.sortedStudent(SortedValue[sortedBy])
                     }
 
                 }
@@ -108,7 +110,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.refreshData(sortedBy)
+        viewModel.sortedStudent(SortedValue[sortedBy])
         spinner_sortby.setSelection(sortedBy)
     }
 }
