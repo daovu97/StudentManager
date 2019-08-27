@@ -19,8 +19,6 @@ import kotlinx.android.synthetic.main.activity_edit_profile.*
 import java.util.*
 
 
-
-
 class EditProfileActivity : AppCompatActivity() {
 
     companion object {
@@ -63,6 +61,7 @@ class EditProfileActivity : AppCompatActivity() {
                 mBirth.set(Calendar.MONTH, month)
                 mBirth.set(Calendar.DAY_OF_MONTH, day)
                 updateBirth(mBirth)
+                print(mBirth.toString())
             }
 
             setOnClickListener {
@@ -76,14 +75,14 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
 
-        image_profile.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(
-                Intent.createChooser(intent, "Select Picture"),
-                REQUEST_PICK_IMAGE
-            )
-        }
+//        image_profile.setOnClickListener {
+//            val intent = Intent(Intent.ACTION_PICK)
+//            intent.type = "image/*"
+//            startActivityForResult(
+//                Intent.createChooser(intent, "Select Picture"),
+//                REQUEST_PICK_IMAGE
+//            )
+//        }
 
         btn_cancel.setOnClickListener {
             finish()
@@ -194,16 +193,16 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == REQUEST_PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+//
+//            selectedImageUrl = data.data
+//            Glide.with(this)
+//                .load(selectedImageUrl)
+//                .into(image_profile)
+//        }
+//    }
 
-            selectedImageUrl = data.data
-            Glide.with(this)
-                .load(selectedImageUrl)
-                .into(image_profile)
-        }
-    }
 
-    
 }

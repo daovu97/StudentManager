@@ -69,10 +69,10 @@ class ProfileActivity : AppCompatActivity() {
             tv_birth.text = Util.dateFormat(it.birth)
             tv_sex.text = EditProfileActivity.listSex[it.sex]
             tv_major.text = it.major
-            val uri: Uri = Uri.parse(it.imageProfile)
-            Glide.with(this)
-                .load(File(uri.path!!))
-                .into(image_profile)
+//            val uri: Uri = Uri.parse(it.imageProfile)
+//            Glide.with(this)
+//                .load(File(uri.path!!))
+//                .into(image_profile)
         }
 
     }

@@ -58,10 +58,10 @@ class MainAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bind(student: Student) {
-            Glide.with(context)
-                .load(Uri.parse(student.imageProfile))
-                .override(60, 60)
-                .into(imageProfile)
+//            Glide.with(context)
+//                .load(Uri.parse(student.imageProfile))
+//                .override(60, 60)
+//                .into(imageProfile)
             name.text = "${student.lastName} ${student.firstName}"
             birth.text = Util.dateFormat(student.birth)
         }
