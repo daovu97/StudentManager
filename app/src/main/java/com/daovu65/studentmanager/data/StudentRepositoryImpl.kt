@@ -13,7 +13,7 @@ class StudentRepositoryImpl(
     override suspend fun sortedByAsync(value: String): Deferred<List<Student>> =
         withContext(Dispatchers.IO) {
             async {
-                val query = "SELECT * FROM student_table ORDER BY $value ASC"
+                val query = "SELECT * FROM student_table ORDER BY $value"
                 studentDao.sortedBy(SimpleSQLiteQuery(query)).map { studentEntity ->
                     Mapper.studentEntityToStudent(studentEntity)
                 }
@@ -46,6 +46,7 @@ class StudentRepositoryImpl(
         withContext(Dispatchers.IO) {
             async {
                 Mapper.studentEntityToStudent(studentDao.getStudentById(id))
+
             }
         }
 

@@ -126,9 +126,7 @@ class EditProfileActivity : AppCompatActivity() {
             )
 
             viewModel.addStudent(student)
-
             finish()
-
         }
     }
 
@@ -157,9 +155,12 @@ class EditProfileActivity : AppCompatActivity() {
             edt_major.setText(it.major)
             spiner_sex.setSelection(it.sex)
             selectedImageUrl = Uri.parse(it.imageProfile)
+
             Glide.with(this)
                 .load(selectedImageUrl)
+                .error(android.R.drawable.ic_menu_add)
                 .into(image_profile)
+
         }
 
         btn_delete.apply {
@@ -168,8 +169,9 @@ class EditProfileActivity : AppCompatActivity() {
                 currentStudent?.let {
                     viewModel.deleteStudent(it)
                 }
-                val intent =
-                    Intent(this@EditProfileActivity, MainActivity::class.java)
+
+                val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
                 finish()
             }
@@ -230,4 +232,5 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
     }
+
 }

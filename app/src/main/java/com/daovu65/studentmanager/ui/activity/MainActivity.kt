@@ -25,8 +25,9 @@ class MainActivity : AppCompatActivity() {
         const val BUNDLE_ADD_NEW = "BUNDLE_ADD_NEW"
         const val BUNDLE_STUDENT_ID = "BUNDLE_STUDENT_ID"
 
-        val listSortedBy: List<String> = listOf("First name", "Last name", "Age")
-        val SortedValue = listOf("first_name", "last_name", "birth")
+        val listSortedBy: List<String> =
+            listOf("None", "First name increase", "First name decrease", "Last name increase")
+        val SortedValue = listOf(null, "first_name ASC", "first_name DESC", "last_name ASC")
 
     }
 
@@ -85,7 +86,6 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-
 
     private fun searchData() {
         edt_search.addTextChangedListener(object : TextWatcher {

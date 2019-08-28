@@ -70,6 +70,7 @@ class ProfileActivity : AppCompatActivity() {
             tv_major.text = it.major
             Glide.with(this)
                 .load(Uri.parse(it.imageProfile))
+                .error(R.mipmap.ic_launcher_round)
                 .into(image_profile)
         }
 

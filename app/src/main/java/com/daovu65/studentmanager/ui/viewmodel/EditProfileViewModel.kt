@@ -1,14 +1,13 @@
 package com.daovu65.studentmanager.ui.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.daovu65.studentmanager.domain.entity.Student
 import com.daovu65.studentmanager.domain.interactor.AddNewStudent
 import com.daovu65.studentmanager.domain.interactor.DeleteStudent
 import com.daovu65.studentmanager.domain.interactor.UpdateStudent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class EditProfileViewModel(
     private val addNewStudent: AddNewStudent,
@@ -18,23 +17,27 @@ class EditProfileViewModel(
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
+
     fun addStudent(student: Student) {
         uiScope.launch {
             addNewStudent.invoke(student)
+            delay(100)
         }
     }
 
     fun deleteStudent(student: Student) {
         uiScope.launch {
             deleteStudent.invoke(student)
+            delay(100)
         }
     }
 
     fun updateStudent(student: Student) {
         uiScope.launch {
             updateStudent.invoke(student)
+            delay(100)
+
         }
     }
-
 
 }

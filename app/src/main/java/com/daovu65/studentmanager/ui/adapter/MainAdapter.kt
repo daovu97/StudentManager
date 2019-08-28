@@ -63,6 +63,7 @@ class MainAdapter(
             Glide.with(context)
                 .load(Uri.parse(student.imageProfile))
                 .override(60, 60)
+                .error(R.mipmap.ic_launcher_round)
                 .into(imageProfile)
             name.text = "${student.lastName} ${student.firstName}"
             birth.text = Util.dateFormat(student.birth)

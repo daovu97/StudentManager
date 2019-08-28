@@ -7,10 +7,7 @@ import com.daovu65.studentmanager.domain.entity.Student
 import com.daovu65.studentmanager.domain.interactor.FindStudentByName
 import com.daovu65.studentmanager.domain.interactor.GetAllStudent
 import com.daovu65.studentmanager.domain.interactor.SortedBy
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MainViewModel(
     private val getAllStudent: GetAllStudent,
@@ -26,13 +23,21 @@ class MainViewModel(
     val listStudent: LiveData<List<Student>>
         get() = _listStudent
 
-    fun sortedStudent(value: String) {
-        uiScope.launch {
-            val value = sortedBy.invoke(value)
-            _listStudent.postValue(value)
+    fun sortedStudent(value: String?) {
+        if (value.isNullOrBlank()) {
+            uiScope.launch {
+                val value = getAllStudent.invoke()
+                _listStudent.postValue(value)
+            }
+        } else {
+            uiScope.launch {
+                val value = sortedBy.invoke(value)
+                _listStudent.postValue(value)
+            }
         }
 
     }
+
 
     fun findStudentByName(name: String) {
         uiScope.launch {
