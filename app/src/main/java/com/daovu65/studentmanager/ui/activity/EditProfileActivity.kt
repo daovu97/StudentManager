@@ -102,7 +102,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
     }
-    
+
     private fun addNewStudent() {
         btn_delete.visibility = View.GONE
         btn_save.setOnClickListener {
