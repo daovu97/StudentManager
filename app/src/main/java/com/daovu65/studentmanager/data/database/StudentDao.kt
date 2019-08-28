@@ -23,7 +23,7 @@ interface StudentDao {
     @Delete
     fun delete(studentEntity: StudentEntity)
 
-    //    @Query("SELECT * FROM student_table ORDER BY :value ASC")
+    //    @Query("SELECT * FROM student_table ORDER BY :value")
     @RawQuery
     fun sortedBy(sortQuery: SupportSQLiteQuery): List<StudentEntity>
 }

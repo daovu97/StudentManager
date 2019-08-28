@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.daovu65.studentmanager.domain.entity.Student
 import com.daovu65.studentmanager.domain.interactor.GetStudentById
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val getStudentById: GetStudentById
@@ -18,7 +21,7 @@ class ProfileViewModel(
         get() = _liveStudent
 
     fun getStudentById(id: Int) {
-        val value = uiScope.launch  {
+        uiScope.launch {
             _liveStudent.postValue(getStudentById.invoke(id))
         }
 

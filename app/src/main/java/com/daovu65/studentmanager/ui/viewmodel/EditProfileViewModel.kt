@@ -1,7 +1,5 @@
 package com.daovu65.studentmanager.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.daovu65.studentmanager.domain.entity.Student
 import com.daovu65.studentmanager.domain.interactor.AddNewStudent
