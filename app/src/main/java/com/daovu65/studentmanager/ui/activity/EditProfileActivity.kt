@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.daovu65.studentmanager.GrantPermission
@@ -107,7 +108,10 @@ class EditProfileActivity : AppCompatActivity() {
         btn_delete.visibility = View.GONE
         btn_save.setOnClickListener {
             val firstName = edt_first_name.text.toString()
-            if (firstName.isEmpty() || firstName.isBlank()) return@setOnClickListener
+            if (firstName.isEmpty() || firstName.isBlank()) {
+                Toast.makeText(this, "please input name", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val lastName = edt_last_name.text.toString()
             val birth = mBirth.timeInMillis / 1000L
             val sex = SexValue[spiner_sex.selectedItemPosition]
@@ -171,6 +175,8 @@ class EditProfileActivity : AppCompatActivity() {
                 }
 
                 val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
+                Toast.makeText(this@EditProfileActivity, "Deleted student!!", Toast.LENGTH_SHORT)
+                    .show()
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
                 finish()
@@ -179,6 +185,10 @@ class EditProfileActivity : AppCompatActivity() {
 
         btn_save.setOnClickListener {
             val firstName = edt_first_name.text.toString()
+            if (firstName.isEmpty() || firstName.isBlank()) {
+                Toast.makeText(this, "please input name", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val lastName = edt_last_name.text.toString()
             val birth = mBirth.timeInMillis / 1000L
             val sex = SexValue[spiner_sex.selectedItemPosition]

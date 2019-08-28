@@ -2,6 +2,7 @@ package com.daovu65.studentmanager.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -17,6 +18,7 @@ import com.daovu65.studentmanager.ui.adapter.MainAdapter
 import com.daovu65.studentmanager.ui.viewmodel.MainVMFactory
 import com.daovu65.studentmanager.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             })
         searchData()
         sortedData()
+        swipeToRefresh()
         btn_add_new.setOnClickListener {
             val intent = Intent(this, EditProfileActivity::class.java)
             intent.putExtra(BUNDLE_ADD_NEW, BUNDLE_ADD_NEW)
@@ -115,6 +118,19 @@ class MainActivity : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 sortedBy = p2
                 viewModel.sortedStudent(SortedValue[sortedBy])
+            }
+
+        }
+    }
+
+    private fun swipeToRefresh() {
+        swiperefresh.setOnRefreshListener {
+            GlobalScope.launch(Dispatchers.IO) {
+                viewModel.sortedStudent(SortedValue[sortedBy])
+                delay(1000L)
+                withContext(Dispatchers.Main) {
+                    swiperefresh.isRefreshing = false
+                }
             }
 
         }
