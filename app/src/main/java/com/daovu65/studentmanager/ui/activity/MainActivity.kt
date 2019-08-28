@@ -18,7 +18,9 @@ import com.daovu65.studentmanager.ui.viewmodel.MainVMFactory
 import com.daovu65.studentmanager.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
+
     companion object {
         const val BUNDLE_ADD_NEW = "BUNDLE_ADD_NEW"
         const val BUNDLE_STUDENT_ID = "BUNDLE_STUDENT_ID"
@@ -37,29 +39,30 @@ class MainActivity : AppCompatActivity() {
         InjectionUtil.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         viewModel = viewModelFactory.create(MainViewModel::class.java)
-
-        spinner_sortby.apply {
-            adapter = ArrayAdapter(
-                this@MainActivity,
-                android.R.layout.simple_spinner_dropdown_item,
-                listSortedBy
-            )
-
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                }
-
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    sortedBy = p2
-                    viewModel.sortedStudent(SortedValue[sortedBy])
-                }
-
-            }
-
+        initView()
+        viewModel.listStudent.observe(this@MainActivity,
+            Observer<List<Student>> { t ->
+                mAdapter.submitValue(t)
+                print(t.toString())
+            })
+        searchData()
+        sortedData()
+        btn_add_new.setOnClickListener {
+            val intent = Intent(this, EditProfileActivity::class.java)
+            intent.putExtra(BUNDLE_ADD_NEW, BUNDLE_ADD_NEW)
+            startActivity(intent)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.sortedStudent(SortedValue[sortedBy])
+        spinner_sortby.setSelection(sortedBy)
+    }
+
+    private fun initView() {
         recycler_student.apply {
             mAdapter = MainAdapter(this@MainActivity) {
                 val intent = Intent(this@MainActivity, ProfileActivity::class.java)
@@ -69,15 +72,22 @@ class MainActivity : AppCompatActivity() {
 
             layoutManager =
                 LinearLayoutManager(this@MainActivity)
-            viewModel.listStudent.observe(this@MainActivity,
-                Observer<List<Student>> { t ->
-                    mAdapter.submitValue(t)
-                    print(t.toString())
-                })
+
             adapter = mAdapter
 
         }
+        spinner_sortby.apply {
+            adapter = ArrayAdapter(
+                this@MainActivity,
+                android.R.layout.simple_spinner_dropdown_item,
+                listSortedBy
+            )
 
+        }
+    }
+
+
+    private fun searchData() {
         edt_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 p0?.let {
@@ -95,17 +105,19 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        btn_add_new.setOnClickListener {
-            val intent = Intent(this, EditProfileActivity::class.java)
-            intent.putExtra(BUNDLE_ADD_NEW, BUNDLE_ADD_NEW)
-            startActivity(intent)
+    }
+
+    private fun sortedData() {
+        spinner_sortby.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                sortedBy = p2
+                viewModel.sortedStudent(SortedValue[sortedBy])
+            }
+
         }
-
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.sortedStudent(SortedValue[sortedBy])
-        spinner_sortby.setSelection(sortedBy)
-    }
 }

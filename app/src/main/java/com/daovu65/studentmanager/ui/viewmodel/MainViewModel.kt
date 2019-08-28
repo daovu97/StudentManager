@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.daovu65.studentmanager.domain.entity.Student
 import com.daovu65.studentmanager.domain.interactor.FindStudentByName
 import com.daovu65.studentmanager.domain.interactor.GetAllStudent
-import com.daovu65.studentmanager.domain.interactor.GetStudentById
 import com.daovu65.studentmanager.domain.interactor.SortedBy
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val getAllStudent: GetAllStudent,

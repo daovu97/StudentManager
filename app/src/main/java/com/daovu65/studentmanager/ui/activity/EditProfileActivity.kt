@@ -3,12 +3,14 @@ package com.daovu65.studentmanager.ui.activity
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.daovu65.studentmanager.GrantPermission
 import com.daovu65.studentmanager.InjectionUtil
 import com.daovu65.studentmanager.R
 import com.daovu65.studentmanager.Util
@@ -25,13 +27,14 @@ class EditProfileActivity : AppCompatActivity() {
         val listSex: List<String> = listOf("Men", "Women", "Other")
         val SexValue = listOf(0, 1, 2)
         private const val REQUEST_PICK_IMAGE = 0
+
     }
 
     private lateinit var viewModel: EditProfileViewModel
     lateinit var viewModelFactory: EditProfileVMFactory
     private var mState: Int = 0
     private val mBirth: Calendar = Calendar.getInstance()
-    private lateinit var selectedImageUrl: Uri
+    private var selectedImageUrl: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         InjectionUtil.inject(this)
@@ -76,12 +79,16 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         image_profile.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(
-                Intent.createChooser(intent, "Select Picture"),
-                REQUEST_PICK_IMAGE
-            )
+            val grantPermission = GrantPermission(this)
+            if (grantPermission.checkPermission()) {
+                val intent = Intent(Intent.ACTION_PICK)
+                intent.type = "image/*"
+                startActivityForResult(
+                    Intent.createChooser(intent, "Select Picture"),
+                    REQUEST_PICK_IMAGE
+                )
+            } else grantPermission.requestPermission()
+
         }
 
         btn_cancel.setOnClickListener {
@@ -209,5 +216,22 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
+        when (requestCode) {
+            GrantPermission.PERMISSION_REQUEST_CODE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                val intent = Intent(Intent.ACTION_PICK)
+                intent.type = "image/*"
+                startActivityForResult(
+                    Intent.createChooser(intent, "Select Picture"),
+                    REQUEST_PICK_IMAGE
+                )
+            }
+        }
+
+    }
 }
