@@ -51,10 +51,11 @@
 
     <ImageButton
         android:id="@+id/btn_add_new"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
         android:layout_marginEnd="16dp"
         android:background="@null"
+        android:scaleType="fitXY"
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
