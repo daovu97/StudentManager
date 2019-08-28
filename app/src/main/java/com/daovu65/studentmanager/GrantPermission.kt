@@ -16,19 +16,19 @@ class GrantPermission(private val activity: Activity) {
         )
     }
 
-     fun checkPermission(): Boolean {
+    fun checkPermission(): Boolean {
         val result = ContextCompat.checkSelfPermission(
             activity,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.READ_EXTERNAL_STORAGE
         )
         return result == PackageManager.PERMISSION_GRANTED
     }
 
-     fun requestPermission() {
+    fun requestPermission() {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(
                 activity,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.READ_EXTERNAL_STORAGE
             )
         ) {
             Toast.makeText(

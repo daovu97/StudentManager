@@ -23,12 +23,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_launcher_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.17" />
+            app:layout_constraintWidth_percent="0.17"
+            card_view:src="@mipmap/ic_launcher_round" />
 
         <TextView
             android:id="@+id/tv_full_name"

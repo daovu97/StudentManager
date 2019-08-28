@@ -13,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_launcher_background"
+        android:src="@mipmap/ic_launcher_round"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -22,7 +22,6 @@
         app:layout_constraintWidth_percent="0.4" />
 
     <TextView
-        android:textSize="26sp"
         android:id="@+id/tv_full_name"
         style="@style/TextStyle_label_field_name"
         android:layout_width="wrap_content"
@@ -34,6 +33,7 @@
         android:text="DAO XUAN VU"
         android:textAlignment="center"
         android:textAllCaps="true"
+        android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
