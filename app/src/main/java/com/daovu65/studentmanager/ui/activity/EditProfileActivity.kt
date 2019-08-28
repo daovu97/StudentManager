@@ -63,7 +63,7 @@ class EditProfileActivity : AppCompatActivity() {
                 mBirth.set(Calendar.YEAR, year)
                 mBirth.set(Calendar.MONTH, month)
                 mBirth.set(Calendar.DAY_OF_MONTH, day)
-                updateBirth(mBirth)
+                edt_birth.setText(Util.dateFormat(mBirth.timeInMillis / 1000L))
                 print(mBirth.toString())
             }
 
@@ -102,11 +102,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
     }
-
-    private fun updateBirth(birth: Calendar) {
-        edt_birth.setText(Util.dateFormat(birth.timeInMillis / 1000L))
-    }
-
+    
     private fun addNewStudent() {
         btn_delete.visibility = View.GONE
         btn_save.setOnClickListener {
