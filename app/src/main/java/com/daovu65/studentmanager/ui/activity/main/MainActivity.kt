@@ -27,8 +27,23 @@ class MainActivity : AppCompatActivity() {
         const val BUNDLE_STUDENT_ID = "BUNDLE_STUDENT_ID"
 
         val listSortedBy: List<String> =
-            listOf("None", "First name increase", "First name decrease", "Last name increase")
-        val SortedValue = listOf(null, "first_name ASC", "first_name DESC", "last_name ASC")
+            listOf(
+                "None",
+                "First name increase",
+                "First name decrease",
+                "Last name increase",
+                "Age increase",
+                "Age decrease"
+            )
+        val SortedValue =
+            listOf(
+                null,
+                "first_name ASC",
+                "first_name DESC",
+                "last_name ASC",
+                "birth DESC",
+                "birth ASC"
+            )
 
     }
 

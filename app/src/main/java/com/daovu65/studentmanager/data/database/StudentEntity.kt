@@ -18,7 +18,7 @@ data class StudentEntity(
     val lastName: String,
 
     @ColumnInfo(name = "birth")
-    val birth: String,
+    val birth: Long,
 
     @ColumnInfo(name = "sex")
     val sex: String,
