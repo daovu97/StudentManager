@@ -68,10 +68,7 @@ class MainActivity : AppCompatActivity() {
         swipeToRefresh()
         btn_add_new.setOnClickListener {
             val intent = Intent(this, EditProfileActivity::class.java)
-            intent.putExtra(
-                BUNDLE_ADD_NEW,
-                BUNDLE_ADD_NEW
-            )
+            intent.putExtra(BUNDLE_ADD_NEW, BUNDLE_ADD_NEW)
             startActivity(intent)
         }
 
