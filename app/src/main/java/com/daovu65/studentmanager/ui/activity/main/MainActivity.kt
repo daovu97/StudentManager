@@ -1,4 +1,4 @@
-package com.daovu65.studentmanager.ui.activity
+package com.daovu65.studentmanager.ui.activity.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.daovu65.studentmanager.InjectionUtil
 import com.daovu65.studentmanager.R
 import com.daovu65.studentmanager.domain.entity.Student
+import com.daovu65.studentmanager.ui.activity.editProfile.EditProfileActivity
+import com.daovu65.studentmanager.ui.activity.profile.ProfileActivity
 import com.daovu65.studentmanager.ui.adapter.MainAdapter
-import com.daovu65.studentmanager.ui.viewmodel.MainVMFactory
-import com.daovu65.studentmanager.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 
@@ -53,7 +53,10 @@ class MainActivity : AppCompatActivity() {
         swipeToRefresh()
         btn_add_new.setOnClickListener {
             val intent = Intent(this, EditProfileActivity::class.java)
-            intent.putExtra(BUNDLE_ADD_NEW, BUNDLE_ADD_NEW)
+            intent.putExtra(
+                BUNDLE_ADD_NEW,
+                BUNDLE_ADD_NEW
+            )
             startActivity(intent)
         }
 
@@ -69,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         recycler_student.apply {
             mAdapter = MainAdapter(this@MainActivity) {
                 val intent = Intent(this@MainActivity, ProfileActivity::class.java)
-                intent.putExtra(BUNDLE_STUDENT_ID, mAdapter.getStudentAt(it).id.toString())
+                intent.putExtra(BUNDLE_STUDENT_ID, mAdapter.getStudentAt(it).id)
                 startActivity(intent)
             }
 

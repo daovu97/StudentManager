@@ -1,4 +1,4 @@
-package com.daovu65.studentmanager.ui.viewmodel
+package com.daovu65.studentmanager.ui.activity.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

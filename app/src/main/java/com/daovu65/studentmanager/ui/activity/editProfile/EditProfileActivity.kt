@@ -1,4 +1,4 @@
-package com.daovu65.studentmanager.ui.activity
+package com.daovu65.studentmanager.ui.activity.editProfile
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -10,14 +10,15 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.daovu65.studentmanager.GrantPermission
 import com.daovu65.studentmanager.InjectionUtil
 import com.daovu65.studentmanager.R
 import com.daovu65.studentmanager.Util
-import com.daovu65.studentmanager.domain.entity.Student
-import com.daovu65.studentmanager.ui.viewmodel.EditProfileVMFactory
-import com.daovu65.studentmanager.ui.viewmodel.EditProfileViewModel
+import com.daovu65.studentmanager.databinding.ActivityEditProfileBinding
+import com.daovu65.studentmanager.ui.activity.main.MainActivity
+import com.daovu65.studentmanager.ui.activity.profile.ProfileActivity
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import java.util.*
 
@@ -40,16 +41,19 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         InjectionUtil.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_profile)
+        viewModel = viewModelFactory.create(EditProfileViewModel::class.java)
+        val binding: ActivityEditProfileBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_edit_profile)
+
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
         intent.extras?.let { bundle ->
             when (bundle.get(MainActivity.BUNDLE_ADD_NEW)) {
-                MainActivity.BUNDLE_ADD_NEW -> mState = 1
-                ProfileActivity.BUNDLE_EDIT_STUDENT -> mState = 2
+                MainActivity.BUNDLE_ADD_NEW -> viewModel.setState(1)
+                ProfileActivity.BUNDLE_EDIT_STUDENT -> viewModel.setState(2)
             }
         }
-
-        viewModel = viewModelFactory.create(EditProfileViewModel::class.java)
 
         spiner_sex.apply {
             adapter = ArrayAdapter(
@@ -96,120 +100,83 @@ class EditProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        when (mState) {
-            0 -> return
-            1 -> addNewStudent()
-            2 -> editStudentProfile()
-        }
+        viewModel.state.observe(this, androidx.lifecycle.Observer {
+            when (it) {
+                1 -> addNewStudent()
+                2 -> editStudentProfile()
+            }
+        })
 
     }
 
     private fun addNewStudent() {
         btn_delete.visibility = View.GONE
         btn_save.setOnClickListener {
-            val firstName = edt_first_name.text.toString()
-            if (firstName.isEmpty() || firstName.isBlank()) {
-                Toast.makeText(this, "please input name", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            viewModel.setSexValue(spiner_sex.selectedItemPosition)
+            viewModel.setAgeValue((mBirth.timeInMillis / 1000L))
+            viewModel.setImageProfileValue(selectedImageUrl.toString())
+            viewModel.addStudent {
+                if (it) finish()
+                else Toast.makeText(this, "Save fail !!, please check again", Toast.LENGTH_SHORT)
+                    .show()
             }
-            val lastName = edt_last_name.text.toString()
-            val birth = mBirth.timeInMillis / 1000L
-            val sex = SexValue[spiner_sex.selectedItemPosition]
-            val address = edt_address.text.toString()
-            val major = edt_major.text.toString()
-            val imageProfile = selectedImageUrl.toString()
-            val student = Student(
-                id = 0,
-                firstName = firstName,
-                lastName = lastName,
-                birth = birth,
-                sex = sex,
-                address = address,
-                major = major,
-                imageProfile = imageProfile
-            )
-
-            viewModel.addStudent(student)
-            finish()
         }
     }
 
     private fun editStudentProfile() {
-        var currentStudent: Student? = null
-        intent.extras?.getStringArrayList(ProfileActivity.BUNDLE_USER_PROFILE)?.let {
-            currentStudent = Student(
-                id = Integer.parseInt(it[0]),
-                firstName = it[1],
-                lastName = it[2],
-                birth = it[3].toLong(),
-                sex = Integer.parseInt(it[4]),
-                address = it[5],
-                major = it[6],
-                imageProfile = it[7]
-            )
+        intent.extras?.let {
+            viewModel.getStudentById(it.getInt(ProfileActivity.BUNDLE_USER_PROFILE))
         }
 
-        mBirth.timeInMillis = currentStudent!!.birth * 1000L
-
-        currentStudent?.let {
-            edt_first_name.setText(it.firstName)
-            edt_last_name.setText(it.lastName)
-            edt_birth.setText(Util.dateFormat(it.birth))
-            edt_address.setText(it.address)
-            edt_major.setText(it.major)
+        viewModel.liveStudent.observe(this, androidx.lifecycle.Observer {
+            mBirth.timeInMillis = it.birth * 1000L
             spiner_sex.setSelection(it.sex)
             selectedImageUrl = Uri.parse(it.imageProfile)
-
             Glide.with(this)
                 .load(selectedImageUrl)
                 .error(android.R.drawable.ic_menu_add)
                 .into(image_profile)
-
-        }
+        })
 
         btn_delete.apply {
             visibility = View.VISIBLE
             setOnClickListener {
-                currentStudent?.let {
-                    viewModel.deleteStudent(it)
+                viewModel.deleteStudent {
+                    if (it) {
+                        val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
+                        Toast.makeText(
+                            this@EditProfileActivity,
+                            "Deleted student!!",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(
+                            this@EditProfileActivity, "delete fail !!, please check again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
 
-                val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
-                Toast.makeText(this@EditProfileActivity, "Deleted student!!", Toast.LENGTH_SHORT)
-                    .show()
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-                finish()
+
             }
         }
 
         btn_save.setOnClickListener {
-            val firstName = edt_first_name.text.toString()
-            if (firstName.isEmpty() || firstName.isBlank()) {
-                Toast.makeText(this, "please input name", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            val lastName = edt_last_name.text.toString()
-            val birth = mBirth.timeInMillis / 1000L
-            val sex = SexValue[spiner_sex.selectedItemPosition]
-            val address = edt_address.text.toString()
-            val major = edt_major.text.toString()
-            val imageProfile = selectedImageUrl.toString()
-            val student = Student(
-                id = currentStudent!!.id,
-                firstName = firstName,
-                lastName = lastName,
-                birth = birth,
-                sex = sex,
-                address = address,
-                major = major,
-                imageProfile = imageProfile
-            )
-            currentStudent?.let {
-                viewModel.updateStudent(student)
+            viewModel.setSexValue(spiner_sex.selectedItemPosition)
+            viewModel.setAgeValue((mBirth.timeInMillis / 1000L))
+            viewModel.setImageProfileValue(selectedImageUrl.toString())
+            viewModel.updateStudent {
+                if (it) finish()
+                else {
+                    Toast.makeText(this, "Save fail !!, please check again", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
 
-            finish()
         }
     }
 
@@ -224,7 +191,11 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         when (requestCode) {

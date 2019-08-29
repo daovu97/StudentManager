@@ -12,13 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".ui.activity.ProfileActivity"
+            android:name=".ui.activity.profile.ProfileActivity"
             android:launchMode="singleTask"></activity>
         <activity
-            android:name=".ui.activity.EditProfileActivity"
+            android:name=".ui.activity.editProfile.EditProfileActivity"
             android:launchMode="singleTask"></activity>
         <activity
-            android:name=".ui.activity.MainActivity">
+            android:name=".ui.activity.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

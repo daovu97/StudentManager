@@ -7,12 +7,12 @@ import com.daovu65.studentmanager.data.database.StudentDao
 import com.daovu65.studentmanager.data.database.StudentDatabase
 import com.daovu65.studentmanager.domain.interactor.*
 import com.daovu65.studentmanager.domain.repository.StudentRepository
-import com.daovu65.studentmanager.ui.activity.EditProfileActivity
-import com.daovu65.studentmanager.ui.activity.MainActivity
-import com.daovu65.studentmanager.ui.activity.ProfileActivity
-import com.daovu65.studentmanager.ui.viewmodel.EditProfileVMFactory
-import com.daovu65.studentmanager.ui.viewmodel.MainVMFactory
-import com.daovu65.studentmanager.ui.viewmodel.ProfileVMFactory
+import com.daovu65.studentmanager.ui.activity.editProfile.EditProfileActivity
+import com.daovu65.studentmanager.ui.activity.editProfile.EditProfileVMFactory
+import com.daovu65.studentmanager.ui.activity.main.MainActivity
+import com.daovu65.studentmanager.ui.activity.main.MainVMFactory
+import com.daovu65.studentmanager.ui.activity.profile.ProfileActivity
+import com.daovu65.studentmanager.ui.activity.profile.ProfileVMFactory
 
 @SuppressLint("StaticFieldLeak")
 object InjectionUtil {
@@ -71,11 +71,13 @@ object InjectionUtil {
 
     fun inject(activity: EditProfileActivity) {
         this.context = activity.applicationContext
-        val viewModelFactory = EditProfileVMFactory(
-            addNewStudent = addNewStudent,
-            deleteStudent = deleteStudent,
-            updateStudent = updateStudent
-        )
+        val viewModelFactory =
+            EditProfileVMFactory(
+                addNewStudent = addNewStudent,
+                deleteStudent = deleteStudent,
+                updateStudent = updateStudent,
+                getStudentById = getStudentById
+            )
 
         activity.viewModelFactory = viewModelFactory
     }

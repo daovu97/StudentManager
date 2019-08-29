@@ -13,8 +13,6 @@ import com.daovu65.studentmanager.R
 import com.daovu65.studentmanager.Util
 import com.daovu65.studentmanager.domain.entity.Student
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.activity_profile.*
-import java.io.File
 
 class MainAdapter(
     private val context: Context,
@@ -69,4 +67,6 @@ class MainAdapter(
             birth.text = Util.dateFormat(student.birth)
         }
     }
+
+
 }

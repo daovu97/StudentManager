@@ -1,10 +1,9 @@
-package com.daovu65.studentmanager.ui.viewmodel
+package com.daovu65.studentmanager.ui.activity.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.daovu65.studentmanager.domain.interactor.FindStudentByName
 import com.daovu65.studentmanager.domain.interactor.GetAllStudent
-import com.daovu65.studentmanager.domain.interactor.GetStudentById
 import com.daovu65.studentmanager.domain.interactor.SortedBy
 
 class MainVMFactory(
