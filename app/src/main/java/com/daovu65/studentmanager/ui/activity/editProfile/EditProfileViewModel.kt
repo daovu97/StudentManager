@@ -24,19 +24,25 @@ class EditProfileViewModel(
     private val _liveStudent = MutableLiveData<Student>()
     val liveStudent: LiveData<Student>
         get() = _liveStudent
-    val state = MutableLiveData<Int>()
+    private val _state = MutableLiveData<Int>()
+    val state: LiveData<Int>
+        get() = _state
 
     val firstName = MutableLiveData<String>()
 
+
     val lastName = MutableLiveData<String>()
 
-    private val birthValue = MutableLiveData<Long>()
 
-    val birth = MutableLiveData<String>()
+    private val _birthValue = MutableLiveData<Long>()
 
-    val sex = MutableLiveData<Int>()
+    private val _birth = MutableLiveData<String>()
+    val birth: LiveData<String>
+        get() = _birth
 
-    private val imageProfile = MutableLiveData<String>()
+    private val _sex = MutableLiveData<Int>()
+
+    private val _imageProfile = MutableLiveData<String>()
 
     val address = MutableLiveData<String>()
 
@@ -52,31 +58,31 @@ class EditProfileViewModel(
     }
 
     fun setState(instate: Int) {
-        state.value = instate
+        _state.value = instate
     }
 
     fun setAgeValue(birth: Long) {
-        birthValue.value = birth
+        _birthValue.value = birth
     }
 
     fun setSexValue(inSex: Int) {
-        sex.value = inSex
+        _sex.value = inSex
     }
 
     fun setImageProfileValue(path: String) {
-        imageProfile.value = path
+        _imageProfile.value = path
     }
 
     private fun getDataView(): Student? {
         val inputFirstName = firstName.value ?: ""
         if (inputFirstName.isBlank() || inputFirstName.isEmpty()) return null
         val inputLastName = lastName.value ?: ""
-        val inputAge = birthValue.value ?: 0
+        val inputAge = _birthValue.value ?: 0
         val inputAddress = address.value ?: ""
         val inputMajor = major.value ?: ""
         val id = currentStudent?.id ?: 0
-        val inputImage = imageProfile.value ?: ""
-        val inputSex = sex.value ?: 0
+        val inputImage = _imageProfile.value ?: ""
+        val inputSex = _sex.value ?: 0
         return Student(
             id = id,
             firstName = inputFirstName,
@@ -94,12 +100,12 @@ class EditProfileViewModel(
         student?.let {
             firstName.postValue(it.firstName)
             lastName.postValue(it.lastName)
-            birthValue.postValue(it.birth)
-            birth.postValue(com.daovu65.studentmanager.Util.dateFormat(it.birth))
+            _birthValue.postValue(it.birth)
+            _birth.postValue(com.daovu65.studentmanager.Util.dateFormat(it.birth))
             address.postValue(it.address)
             major.postValue(it.major)
-            imageProfile.postValue(it.imageProfile)
-            sex.postValue(it.sex)
+            _imageProfile.postValue(it.imageProfile)
+            _sex.postValue(it.sex)
         }
     }
 

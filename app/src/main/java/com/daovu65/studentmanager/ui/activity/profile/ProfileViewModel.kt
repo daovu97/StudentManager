@@ -1,5 +1,6 @@
 package com.daovu65.studentmanager.ui.activity.profile
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.daovu65.studentmanager.domain.interactor.GetStudentById
@@ -15,33 +16,48 @@ class ProfileViewModel(
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    val sex = MutableLiveData<String>()
+    private val _sex = MutableLiveData<String>()
+    val sex: LiveData<String>
+        get() = _sex
 
-    val fullName = MutableLiveData<String>()
+    private val _fullName = MutableLiveData<String>()
+    val fullName: LiveData<String>
+        get() = _fullName
 
-    val age = MutableLiveData<String>()
+    private val _age = MutableLiveData<String>()
+    val age: LiveData<String>
+        get() = _age
 
-    val imageProfile = MutableLiveData<String>()
+    private val _imageProfile = MutableLiveData<String>()
+    val imageProfile: LiveData<String>
+        get() = _imageProfile
 
-    val address = MutableLiveData<String>()
+    private val _address = MutableLiveData<String>()
+    val address: LiveData<String>
+        get() = _address
 
-    val major = MutableLiveData<String>()
+    private val _major = MutableLiveData<String>()
+    val major: LiveData<String>
+        get() = _major
 
     fun getStudentById(id: Int) {
         uiScope.launch {
             val student = getStudentById.invoke(id)
-            fullName.postValue("${student.lastName} ${student.firstName}")
-            age.postValue(com.daovu65.studentmanager.Util.dateFormat(student.birth))
-            address.postValue(student.address)
-            major.postValue(student.major)
-            imageProfile.postValue(student.imageProfile)
+            _fullName.postValue("${student.lastName} ${student.firstName}")
+            _age.postValue(com.daovu65.studentmanager.Util.dateFormat(student.birth))
+            _address.postValue(student.address)
+            _major.postValue(student.major)
+            _imageProfile.postValue(student.imageProfile)
             when (student.sex) {
-                EditProfileActivity.SexValue[0] -> sex.postValue(
-                    EditProfileActivity.listSex[0])
-                EditProfileActivity.SexValue[1] -> sex.postValue(
-                    EditProfileActivity.listSex[1])
-                EditProfileActivity.SexValue[2] -> sex.postValue(
-                    EditProfileActivity.listSex[2])
+                EditProfileActivity.SexValue[0] -> _sex.postValue(
+                    EditProfileActivity.listSex[0]
+                )
+                EditProfileActivity.SexValue[1] -> _sex.postValue(
+                    EditProfileActivity.listSex[1]
+                )
+                EditProfileActivity.SexValue[2] -> _sex.postValue(
+                    EditProfileActivity.listSex[2]
+                )
             }
         }
 

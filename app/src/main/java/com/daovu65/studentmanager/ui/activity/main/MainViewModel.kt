@@ -22,7 +22,6 @@ class MainViewModel(
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private val _listStudent: MutableLiveData<List<Student>> = MutableLiveData()
-
     val listStudent: LiveData<List<Student>>
         get() = _listStudent
 
