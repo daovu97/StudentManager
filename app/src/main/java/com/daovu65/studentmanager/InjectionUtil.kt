@@ -27,7 +27,7 @@ object InjectionUtil {
     }
 
     private val repository: StudentRepository by lazy {
-        StudentRepositoryImpl(dao)
+        com.daovu65.studentmanager.data.StudentRepositoryImpl(dao)
     }
 
     private val getAllStudent: GetAllStudent by lazy {

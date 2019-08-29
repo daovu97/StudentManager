@@ -1,6 +1,5 @@
 package com.daovu65.studentmanager.domain.repository
 
-import androidx.lifecycle.LiveData
 import com.daovu65.studentmanager.domain.entity.Student
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
