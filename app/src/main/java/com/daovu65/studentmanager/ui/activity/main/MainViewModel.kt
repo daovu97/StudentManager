@@ -1,5 +1,6 @@
 package com.daovu65.studentmanager.ui.activity.main
 
+import androidx.annotation.UiThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +26,7 @@ class MainViewModel(
     val listStudent: LiveData<List<Student>>
         get() = _listStudent
 
+    @UiThread
     fun sortedStudent(value: String?) {
         if (value.isNullOrBlank()) {
             uiScope.launch {
@@ -41,6 +43,7 @@ class MainViewModel(
     }
 
 
+    @UiThread
     fun findStudentByName(name: String) {
         uiScope.launch {
             val value = findStudentByName.invoke(name)

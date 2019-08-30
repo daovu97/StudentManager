@@ -20,6 +20,9 @@ import com.daovu65.studentmanager.databinding.ActivityEditProfileBinding
 import com.daovu65.studentmanager.ui.activity.main.MainActivity
 import com.daovu65.studentmanager.ui.activity.profile.ProfileActivity
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -34,7 +37,6 @@ class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var viewModel: EditProfileViewModel
     lateinit var viewModelFactory: EditProfileVMFactory
-    private var mState: Int = 0
     private val mBirth: Calendar = Calendar.getInstance()
     private var selectedImageUrl: Uri? = null
 
@@ -132,10 +134,11 @@ class EditProfileActivity : AppCompatActivity() {
             mBirth.timeInMillis = it.birth * 1000L
             spiner_sex.setSelection(it.sex)
             selectedImageUrl = Uri.parse(it.imageProfile)
-            Glide.with(this)
-                .load(selectedImageUrl)
-                .error(android.R.drawable.ic_menu_add)
-                .into(image_profile)
+                Glide.with(this@EditProfileActivity)
+                    .load(selectedImageUrl)
+                    .error(android.R.drawable.ic_menu_add)
+                    .into(image_profile)
+
         })
 
         btn_delete.apply {

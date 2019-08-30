@@ -13,6 +13,9 @@ import com.daovu65.studentmanager.databinding.ActivityProfileBinding
 import com.daovu65.studentmanager.ui.activity.editProfile.EditProfileActivity
 import com.daovu65.studentmanager.ui.activity.main.MainActivity
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -42,10 +45,11 @@ class ProfileActivity : AppCompatActivity() {
             currentStudentId?.let {
                 viewModel.getStudentById(it)
                 viewModel.imageProfile.observe(this, Observer { imagePath ->
-                    Glide.with(this)
-                        .load(imagePath)
-                        .error(R.mipmap.ic_launcher_round)
-                        .into(image_profile)
+                        Glide.with(this@ProfileActivity)
+                            .load(imagePath)
+                            .error(R.mipmap.ic_launcher_round)
+                            .into(image_profile)
+
                 })
             }
 

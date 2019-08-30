@@ -1,5 +1,7 @@
 package com.daovu65.studentmanager.ui.activity.editProfile
 
+import androidx.annotation.UiThread
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,6 +50,7 @@ class EditProfileViewModel(
 
     val major = MutableLiveData<String>()
 
+    @UiThread
     fun getStudentById(id: Int) {
         uiScope.launch {
             currentStudent = getStudentById.invoke(id)
@@ -109,6 +112,7 @@ class EditProfileViewModel(
         }
     }
 
+    @WorkerThread
     fun addStudent(onSuccess: (Boolean) -> Unit) {
         val student = getDataView()
         if (student != null) {
@@ -120,6 +124,7 @@ class EditProfileViewModel(
 
     }
 
+    @WorkerThread
     fun deleteStudent(onSuccess: (Boolean) -> Unit) = uiScope.launch {
         if (currentStudent != null) {
             deleteStudent.invoke(currentStudent!!)
@@ -127,6 +132,7 @@ class EditProfileViewModel(
         } else onSuccess(false)
     }
 
+    @WorkerThread
     fun updateStudent(onSuccess: (Boolean) -> Unit) {
         val student = getDataView()
         if (student != null) {
