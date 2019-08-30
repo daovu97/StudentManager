@@ -11,7 +11,7 @@ interface StudentDao {
     @Query("SELECT * FROM student_table where id =:id")
     fun getStudentById(id: Int): StudentEntity
 
-    @Query("SELECT * FROM student_table WHERE first_name LIKE :search OR last_name LIKE :search")
+    @Query("SELECT * FROM student_table WHERE first_name LIKE '%' || :search || '%' OR last_name LIKE '%' || :search || '%' OR last_name || ' ' || first_name LIKE '%' || :search || '%'")
     fun findUserWithName(search: String): List<StudentEntity>
 
     @Insert
