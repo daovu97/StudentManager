@@ -4,6 +4,7 @@ import androidx.annotation.UiThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import com.daovu65.studentmanager.domain.entity.Student
 import com.daovu65.studentmanager.domain.interactor.FindStudentByName
 import com.daovu65.studentmanager.domain.interactor.GetAllStudent
@@ -21,7 +22,6 @@ class MainViewModel(
 
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
     private val _listStudent: MutableLiveData<List<Student>> = MutableLiveData()
     val listStudent: LiveData<List<Student>>
         get() = _listStudent
@@ -49,6 +49,7 @@ class MainViewModel(
             val value = findStudentByName.invoke(name)
             _listStudent.postValue(value)
         }
+
     }
 
     override fun onCleared() {
